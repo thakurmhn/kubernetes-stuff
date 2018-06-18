@@ -1,0 +1,8 @@
+---
+- hosts: kube
+  connection: ssh
+  user: root
+  gather_facts: yes
+  roles:
+  - { role: kubernetes-deploy, when: "ansible_os_family == 'RedHat'" }
+

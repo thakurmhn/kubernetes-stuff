@@ -1,0 +1,28 @@
+[req]
+req_extensions = v3_req
+distinguished_name = req_distinguished_name
+[req_distinguished_name]
+
+[v3_req]
+
+# Extensions to add to a certificate request
+basicConstraints = CA:FALSE
+keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+subjectAltName = @alt_names
+
+[alt_names]
+{% if k8s_apiserver_dns_names is defined %}
+{% set dns_count = 1 %}
+{% for name in k8s_apiserver_dns_names %}
+DNS.{{ dns_count }} = {{ name }}
+{% set dns_count = dns_count +1 %}
+{% endfor %}
+{% endif %}
+IP.1 = {{ ansible_default_ipv4.address }}
+{% if k8s_apiserver_additional_ips is defined %}
+{% set ip_count = 2 %}
+{% for ip in k8s_apiserver_additional_ips %}
+IP.{{ ip_count }} = {{ ip }}
+{% set ip_count = ip_count +1 %}
+{% endfor %}
+{% endif %}

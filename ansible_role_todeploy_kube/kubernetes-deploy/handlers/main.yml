@@ -1,0 +1,6 @@
+---
+- name: Start Docker
+  service: name='{{ docker_service }}' state=started
+
+- name: Start Kubelet Service
+  service: name=kubelet.service state=started

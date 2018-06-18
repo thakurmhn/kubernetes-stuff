@@ -1,0 +1,20 @@
+---
+- name: Configure repositories
+  shell: /bin/yum clean all && /bin/yum repolist
+- name: Update System
+  yum:
+    name: '*'
+    state: latest
+- name: Reboot server
+  shell: sleep 2 && reboot "Ansible system package updated"
+  async: 1
+  poll: 0
+- name: Waiting for 30 sec to server to come back after reboot
+  wait_for_connection:
+    delay: 60
+    sleep: 5
+    timeout: 300
+- name: Check Ping
+  ping:
+#  local_action: wait_for host={{ ansible_ssh_host }} state=started
+#  become: false

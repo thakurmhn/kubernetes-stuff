@@ -1,0 +1,5 @@
+# {{ ansible_managed }}
+# Flanneld configuration options
+
+# Any additional options that you want to pass
+FLANNEL_OPTIONS="-etcd-prefix {{ etcd_key }} -etcd-endpoints http://{{ ansible_hostname }}.{{ ansible_domain }}:{{ etcd_port }}"

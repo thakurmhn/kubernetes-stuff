@@ -1,0 +1,8 @@
+---
+kubernetes_pkgs:
+  - kubelet
+  - kubeadm
+  - kubectl
+
+docker_pkg: docker-1.13.1
+docker_service: docker
