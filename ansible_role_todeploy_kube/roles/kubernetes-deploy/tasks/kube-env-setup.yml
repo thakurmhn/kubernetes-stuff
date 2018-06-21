@@ -17,8 +17,6 @@
   register: task_result
   failed_when: "task_result|failed and 'could not' not in task_result.msg|lower"
 
-
-
 - name: Install and start Docker
   yum: name='{{ docker_pkg }}' state=present
 
@@ -33,10 +31,6 @@
     owner: root
     group: root
     mode: 0644
-
-- name: Install Kubernetes Pkages
-  yum: name='{{ item }}' state=latest
-  with_items: '{{ kubernetes_pkgs }}'
 
 - name: Configure Systems SELinux
   lineinfile:
@@ -56,5 +50,7 @@
     replace: ''#/dev/mapper/centos-swap swap                    swap    defaults        0 0
     backup: yes
 
-- name: Enable Kubernetes service
-  service: name=kubelet.service enabled=yes
+- name: Install Kubernetes Pkages
+  yum: name='{{ item }}' state=latest
+  with_items: '{{ kubernetes_pkgs }}'
+  notify: Start Kubelet Service

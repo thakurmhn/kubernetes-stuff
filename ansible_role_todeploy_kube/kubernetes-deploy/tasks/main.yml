@@ -1,6 +1,0 @@
----
-- name: Update CentOS 
-  include: tasks/os-update.yml
-
-- name: Install Kubernetes 
-  include: tasks/kube-pkg.yml

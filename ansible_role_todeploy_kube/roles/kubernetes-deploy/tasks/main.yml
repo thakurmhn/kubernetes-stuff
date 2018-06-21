@@ -1,0 +1,9 @@
+---
+- name: Update CentOS
+  include: tasks/os-update.yml
+
+- name: Setup Kubernetes environment
+  include: tasks/kube-env-setup.yml
+
+- name: Configure cluster
+  include: tasks/config-kube-cluster.yaml
